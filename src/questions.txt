@@ -1,3 +1,3 @@
-What year was the first allsvenska?;1930,1950,1960,1970
-Who won the Golden Boot in the 2018 FIFA World Cup?;Harry Kane,Luka Modric,Cristiano Ronaldo,Lionel Messi
-Which country has won the most FIFA World Cups?;Brazil,Germany,Italy,Argentina
+What year was the first allsvenska?;1930,1950,1960,1970;1970
+Who won the Golden Boot in the 2018 FIFA World Cup?;Harry Kane,Luka Modric,Cristiano Ronaldo,Lionel Messi;Lionel Messi
+Which country has won the most FIFA World Cups?;Brazil,Germany,Italy,Argentina;Argentina

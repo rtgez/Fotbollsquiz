@@ -10,6 +10,10 @@ public class mainguiii extends JDialog implements ActionListener {
     private  Controller controller;
     private GridBagConstraints gbc;
     private String currentCategory = "";
+    private JButton easyButton;
+    private JButton mediumButton;
+    private JButton hardButton;
+    private String currentDifficulty = "";
 
     public mainguiii(Controller controller) {
         this.controller=controller;
@@ -46,6 +50,19 @@ public class mainguiii extends JDialog implements ActionListener {
         setModal(true);
         setVisible(true);
     }
+    private void addDifficultyButtons() {
+        easyButton = new JButton("Easy");
+        mediumButton = new JButton("Medium");
+        hardButton = new JButton("Hard");
+
+        addButton(easyButton);
+        addButton(mediumButton);
+        addButton(hardButton);
+
+        easyButton.addActionListener(e -> currentDifficulty = "Easy");
+        mediumButton.addActionListener(e -> currentDifficulty = "Medium");
+        hardButton.addActionListener(e -> currentDifficulty = "Hard");
+    }
 
     private void addButton(JButton button) {
         configureButton(button);
@@ -80,17 +97,36 @@ public class mainguiii extends JDialog implements ActionListener {
         }
     }
 
-    private void showQuiz(String kategori) {
+    private void showQuiz(String category) {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridBagLayout());
 
-        titleLabel.setText(kategori + " Quiz");
+        titleLabel.setText(category + " Quiz");
         mainPanel.add(titleLabel, gbc);
+
+        String[] options = {"Easy", "Medium", "Hard"};
+        int difficultyIndex = JOptionPane.showOptionDialog(
+                this,
+                "Choose the difficulty level:",
+                "Select Difficulty",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        if (difficultyIndex == JOptionPane.CLOSED_OPTION) {
+            resetToMainMenu();
+            return;
+        }
+
+        currentDifficulty = options[difficultyIndex];
 
         startGameButton = new JButton("Start Game");
         configureButton(startGameButton);
         mainPanel.add(startGameButton, gbc);
-        startGameButton.addActionListener(this);
+        startGameButton.addActionListener(e -> StartGame());
 
         JButton backButton = new JButton("Back to Menu");
         configureButton(backButton);
@@ -99,12 +135,16 @@ public class mainguiii extends JDialog implements ActionListener {
 
         validate();
         repaint();
+        setVisible(true);
     }
 
+
+
     private void StartGame() {
-        System.out.println("Starting game for category: " + currentCategory);
-        controller.startGame(currentCategory);
+        System.out.println("Starting game for category: " + currentCategory + " with difficulty: " + currentDifficulty);
+        controller.startGame(currentCategory, currentDifficulty);
     }
+
 
     private void resetToMainMenu() {
         mainPanel.removeAll();
@@ -120,7 +160,7 @@ public class mainguiii extends JDialog implements ActionListener {
     }
 
     public static void main(String[] args) {
-        QnA[] questions = intitializeQuestions(); // Initialize questions
+        QnA[] questions = intitializeQuestions();
         Player player = new Player(DEFAULT_MODALITY_TYPE.name());
         View view = new View();
         Controller controller = new Controller(player, questions, view);

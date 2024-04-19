@@ -13,12 +13,14 @@ public class Controller {
     public Controller(Player player, QnA[] questions, View view) {
         this.player = player;
         this.view = view;
+        this.questions=questions;
+        this.view.setController(this);
         this.categoryToFilePath = new HashMap<>();
         categoryToFilePath.put("Landslag", "src/landslag_questions.txt");
         categoryToFilePath.put("Champions League", "src/champions_leauge_questions.txt");
         categoryToFilePath.put("Allsvenskan", "src/questions.txt");
     }
-    private void loadQuestionsFromFile(String filePath) throws IOException{
+    private void loadQuestionsFromFile(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             System.out.println("File not found: " + file.getAbsolutePath());
@@ -30,25 +32,21 @@ public class Controller {
             String line;
             System.out.println("Reading file: " + filePath);
             while ((line = reader.readLine()) != null) {
-                try {
-                    System.out.println("Line read: '" + line + "'");
-                    String[] parts = line.split(";");
-                    if (parts.length != 2) {
-                        System.out.println("Incorrect format (expected question;answer1,answer2,...): '" + line + "'");
-                        continue;
-                    }
-                    String question = parts[0].trim();
-                    String[] answers = parts[1].split(",");
-                    if (answers.length < 2) {
-                        System.out.println("Not enough answers in line: '" + line + "'");
-                        continue;
-                    }
-                    questionList.add(new QnA(question, answers));
-                    System.out.println("Loaded question: '" + question + "' with answers: " + Arrays.toString(answers));
-                } catch (Exception e) {
-                    System.out.println("Error processing line: '" + line + "'");
-                    e.printStackTrace();
+                System.out.println("Line read: '" + line + "'");
+                String[] parts = line.split(";");
+                if (parts.length < 2) {
+                    System.out.println("Incorrect format (expected at least question;answers): '" + line + "'");
+                    continue;
                 }
+                String question = parts[0].trim();
+                String[] answers = parts[1].split(",");
+                if (answers.length < 2) {
+                    System.out.println("Not enough answers in line: '" + line + "'");
+                    continue;
+                }
+                String correctAnswer = parts.length > 2 ? parts[2].trim() : null;
+                questionList.add(new QnA(question, answers, correctAnswer));
+                System.out.println("Loaded question: '" + question + "' with answers: " + Arrays.toString(answers) + (correctAnswer != null ? " and correct answer: " + correctAnswer : ""));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,7 +61,8 @@ public class Controller {
     }
 
 
-    public void startGame(String currentCategory) {
+
+    public void startGame(String currentCategory, String difficulty) {
         String filePath = categoryToFilePath.get(currentCategory);
         if (filePath == null) {
             JOptionPane.showMessageDialog(view.getFrame(), "Category does not exist.");
@@ -71,21 +70,33 @@ public class Controller {
         }
         try {
             loadQuestionsFromFile(filePath);
-            // ...
+            applyDifficulty(difficulty);
             nextQuestion();
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(view.getFrame(), "Failed to load questions for the category: " + currentCategory);
         }
+        view.show();
+        nextQuestion();
+    }
+    private void applyDifficulty(String difficulty) {
+        if ("Easy".equals(difficulty)) {
+            view.startTimer(20);
+        } else if ("Medium".equals(difficulty)) {
+            view.startTimer(10);
+        } else if ("Hard".equals(difficulty)) {
+            view.startTimer(5);
+        }
     }
 
-    private void nextQuestion() {
+    public void nextQuestion() {
         if (questions == null || questions.length == 0) {
-            // Handle the case where there are no questions available
+            view.stopTimer();
             JOptionPane.showMessageDialog(view.getFrame(), "No questions available.");
-            System.exit(1); // or any other appropriate action
+            System.exit(1);
             return;
         }
+
         int index = new Random().nextInt(questions.length);
         QnA question = questions[index];
         view.displayQuestion(question.getQuestion());
@@ -96,19 +107,16 @@ public class Controller {
     private void checkAnswer(QnA currentQuestion, ActionEvent e) {
         String selectedAnswer = ((JButton) e.getSource()).getText();
         if (currentQuestion.check(selectedAnswer)) {
+            view.stopTimer();
             player.scorePoint();
             JOptionPane.showMessageDialog(view.getFrame(), "Correct! Score: " + player.getScore());
-            nextQuestion(); // Only call nextQuestion if the answer was correct.
+            nextQuestion();
         } else {
-            JOptionPane.showMessageDialog(view.getFrame(), "Wrong answer. Game over! Score: " + player.getScore());
-            System.exit(0); // or reset the game
+            JOptionPane.showMessageDialog(view.getFrame(), "Wrong answer. Score: " + player.getScore());
         }
-        nextQuestion(); // Move to the next question or end the game
+        nextQuestion();
     }
 
-    public void startSpel(String currentCategory) {
-        startGame(currentCategory);
-    }
 
 /*
     public String getString() {
