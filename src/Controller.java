@@ -1,46 +1,82 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
 public class Controller {
     private Player player;
     private QnA[] questions;
     private View view;
     private QnA currentQuestion;
+    private Map<String, String> categoryToFilePath;
 
     public Controller(Player player, QnA[] questions, View view) {
         this.player = player;
-        this.questions = questions;
         this.view = view;
-        try {
-            loadQuestionsFromFile("C:\\Users\\lanam\\Documents\\questions.txt");
+        this.categoryToFilePath = new HashMap<>();
+        categoryToFilePath.put("Landslag", "src/landslag_questions.txt");
+        categoryToFilePath.put("Champions League", "src/champions_leauge_questions.txt");
+        categoryToFilePath.put("Allsvenskan", "src/questions.txt");
+    }
+    private void loadQuestionsFromFile(String filePath) throws IOException{
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("File not found: " + file.getAbsolutePath());
+            return;
+        }
+
+        List<QnA> questionList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            System.out.println("Reading file: " + filePath);
+            while ((line = reader.readLine()) != null) {
+                try {
+                    System.out.println("Line read: '" + line + "'");
+                    String[] parts = line.split(";");
+                    if (parts.length != 2) {
+                        System.out.println("Incorrect format (expected question;answer1,answer2,...): '" + line + "'");
+                        continue;
+                    }
+                    String question = parts[0].trim();
+                    String[] answers = parts[1].split(",");
+                    if (answers.length < 2) {
+                        System.out.println("Not enough answers in line: '" + line + "'");
+                        continue;
+                    }
+                    questionList.add(new QnA(question, answers));
+                    System.out.println("Loaded question: '" + question + "' with answers: " + Arrays.toString(answers));
+                } catch (Exception e) {
+                    System.out.println("Error processing line: '" + line + "'");
+                    e.printStackTrace();
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(1);
         }
-    }
-    private void loadQuestionsFromFile(String filePath) throws IOException {
-        List<QnA> questionList = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(";");
-            String question = parts[0];
-            String[] answers = parts[1].split(",");
-            questionList.add(new QnA(question, answers));
+
+        if (questionList.isEmpty()) {
+            System.out.println("No questions were loaded.");
+        } else {
+            System.out.println("Total questions loaded: " + questionList.size());
         }
-        reader.close();
         questions = questionList.toArray(new QnA[0]);
     }
+
+
     public void startGame(String currentCategory) {
-        view.show();
-        nextQuestion();
+        String filePath = categoryToFilePath.get(currentCategory);
+        if (filePath == null) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Category does not exist.");
+            return;
+        }
+        try {
+            loadQuestionsFromFile(filePath);
+            // ...
+            nextQuestion();
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(view.getFrame(), "Failed to load questions for the category: " + currentCategory);
+        }
     }
 
     private void nextQuestion() {
