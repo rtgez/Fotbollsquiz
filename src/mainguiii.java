@@ -101,6 +101,10 @@ public class mainguiii extends JDialog implements ActionListener {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridBagLayout());
 
+        int length = 10;
+        for (int i = 0; i < length; i++) {
+            System.out.printf("Something");
+        }
         titleLabel.setText(category + " Quiz");
         mainPanel.add(titleLabel, gbc);
 
