@@ -102,9 +102,7 @@ public class mainguiii extends JDialog implements ActionListener {
         mainPanel.setLayout(new GridBagLayout());
         titleLabel.setText(category + " Quiz");
         mainPanel.add(titleLabel, gbc);
-        for (int i = 0; i < 10; i++) {
-            System.out.printf("something");
-        }
+
         String[] options = {"Easy", "Medium", "Hard"};
         int difficultyIndex = JOptionPane.showOptionDialog(
                 this,
