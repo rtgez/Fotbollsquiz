@@ -2,12 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
 
 public class mainguiii extends JDialog implements ActionListener {
-    private JButton premierLeagueButton, landslagButton, championsLeagueButton, avslutaButton, startGameButton;
+    private JButton premierLeagueButton, vmButton, championsLeagueButton, avslutaButton, startGameButton;
     private JLabel titleLabel;
     private JPanel mainPanel;
-    private  Controller controller;
+    private Controller controller;
     private GridBagConstraints gbc;
     private String currentCategory = "";
     private JButton easyButton;
@@ -15,8 +21,50 @@ public class mainguiii extends JDialog implements ActionListener {
     private JButton hardButton;
     private String currentDifficulty = "";
 
+    public static void main(String[] args) {
+
+
+        List<String> uniqueNames = new ArrayList<>();
+
+        //list to store names
+
+        //loop to enter name
+        while (true) {
+            String name = JOptionPane.showInputDialog("Ange ditt användarnamn: ");
+
+            if (name == null) {
+                //break loop if user cancels
+                break;
+            }
+
+            if (name.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Namn behöver anges. Vänligen ange ditt användarnamn.");
+
+            } else if (uniqueNames.contains(name)) {
+                JOptionPane.showMessageDialog(null, "Användarnamn upptaget, ange ett annat namn.");
+
+
+            } else {
+                uniqueNames.add(name);
+                JOptionPane.showMessageDialog(null, "Welcome, " + name + "!");
+                break;
+            }
+        }
+
+        QnA[] questions = intitializeQuestions();
+        Player player = new Player(DEFAULT_MODALITY_TYPE.name());
+        View view = new View();
+        Controller controller = new Controller(player, questions, view);
+        new mainguiii(controller).setVisible(true);
+
+
+
+    }
+
+
+
     public mainguiii(Controller controller) {
-        this.controller=controller;
+        this.controller = controller;
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.decode("#171954"));
         gbc = new GridBagConstraints();
@@ -29,13 +77,13 @@ public class mainguiii extends JDialog implements ActionListener {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         mainPanel.add(titleLabel, gbc);
 
-        landslagButton = new JButton("Landslag");
+        vmButton = new JButton("VM");
         championsLeagueButton = new JButton("Champions League");
-        premierLeagueButton = new JButton("Allsvenskan");
+        premierLeagueButton = new JButton("Premier League");
         avslutaButton = new JButton("Avsluta");
         startGameButton = new JButton("Start Game");
 
-        addButton(landslagButton);
+        addButton(vmButton);
         addButton(championsLeagueButton);
         addButton(premierLeagueButton);
         addButton(avslutaButton);
@@ -50,6 +98,7 @@ public class mainguiii extends JDialog implements ActionListener {
         setModal(true);
         setVisible(true);
     }
+
     private void addDifficultyButtons() {
         easyButton = new JButton("Easy");
         mediumButton = new JButton("Medium");
@@ -85,18 +134,13 @@ public class mainguiii extends JDialog implements ActionListener {
             System.exit(0);
         } else if (source == startGameButton) {
             StartGame();
-        } else if (source == landslagButton || source == championsLeagueButton || source == premierLeagueButton) {
-            if (source == landslagButton) {
+        } else if (source == vmButton || source == championsLeagueButton || source == premierLeagueButton) {
+            if (source == vmButton) {
                 currentCategory = "Landslag";
             } else if (source == championsLeagueButton) {
                 currentCategory = "Champions League";
-
             } else if (source == premierLeagueButton) {
                 currentCategory = "Allsvenskan";
-
-            } else if (source == premierLeagueButton) {
-                currentCategory = "Premier League";
-
             }
             showQuiz(currentCategory);
         }
@@ -143,7 +187,6 @@ public class mainguiii extends JDialog implements ActionListener {
     }
 
 
-
     private void StartGame() {
         System.out.println("Starting game for category: " + currentCategory + " with difficulty: " + currentDifficulty);
         controller.startGame(currentCategory, currentDifficulty);
@@ -155,7 +198,7 @@ public class mainguiii extends JDialog implements ActionListener {
         titleLabel.setText("MENY");
         mainPanel.add(titleLabel, gbc);
 
-        addButton(landslagButton);
+        addButton(vmButton);
         addButton(championsLeagueButton);
         addButton(premierLeagueButton);
         addButton(avslutaButton);
@@ -163,13 +206,7 @@ public class mainguiii extends JDialog implements ActionListener {
         repaint();
     }
 
-    public static void main(String[] args) {
-        QnA[] questions = intitializeQuestions();
-        Player player = new Player(DEFAULT_MODALITY_TYPE.name());
-        View view = new View();
-        Controller controller = new Controller(player, questions, view);
-        new mainguiii(controller).setVisible(true);
-    }
+
 
     private static QnA[] intitializeQuestions() {
         QnA[] qnAS = new QnA[0];
