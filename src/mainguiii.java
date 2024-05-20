@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class mainguiii extends JDialog implements ActionListener {
-    private JButton allsvenskanButton, landslagButton, championsLeagueButton, avslutaButton, startGameButton;
+    private JButton premierLeagueButton, landslagButton, championsLeagueButton, avslutaButton, startGameButton;
     private JLabel titleLabel;
     private JPanel mainPanel;
     private  Controller controller;
@@ -31,13 +31,13 @@ public class mainguiii extends JDialog implements ActionListener {
 
         landslagButton = new JButton("Landslag");
         championsLeagueButton = new JButton("Champions League");
-        allsvenskanButton = new JButton("Allsvenskan");
+        premierLeagueButton = new JButton("Allsvenskan");
         avslutaButton = new JButton("Avsluta");
         startGameButton = new JButton("Start Game");
 
         addButton(landslagButton);
         addButton(championsLeagueButton);
-        addButton(allsvenskanButton);
+        addButton(premierLeagueButton);
         addButton(avslutaButton);
 
         avslutaButton.addActionListener(e -> System.exit(0));
@@ -85,13 +85,18 @@ public class mainguiii extends JDialog implements ActionListener {
             System.exit(0);
         } else if (source == startGameButton) {
             StartGame();
-        } else if (source == landslagButton || source == championsLeagueButton || source == allsvenskanButton) {
+        } else if (source == landslagButton || source == championsLeagueButton || source == premierLeagueButton) {
             if (source == landslagButton) {
                 currentCategory = "Landslag";
             } else if (source == championsLeagueButton) {
                 currentCategory = "Champions League";
-            } else if (source == allsvenskanButton) {
+
+            } else if (source == premierLeagueButton) {
                 currentCategory = "Allsvenskan";
+
+            } else if (source == premierLeagueButton) {
+                currentCategory = "Premier League";
+
             }
             showQuiz(currentCategory);
         }
@@ -103,7 +108,7 @@ public class mainguiii extends JDialog implements ActionListener {
         titleLabel.setText(category + " Quiz");
         mainPanel.add(titleLabel, gbc);
 
-        String[] options = {"Easy", "Medium", "Hard"};
+        String[] options = {"Easy", "Hard"};
         int difficultyIndex = JOptionPane.showOptionDialog(
                 this,
                 "Choose the difficulty level:",
@@ -152,7 +157,7 @@ public class mainguiii extends JDialog implements ActionListener {
 
         addButton(landslagButton);
         addButton(championsLeagueButton);
-        addButton(allsvenskanButton);
+        addButton(premierLeagueButton);
         addButton(avslutaButton);
         validate();
         repaint();
