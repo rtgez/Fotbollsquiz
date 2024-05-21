@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ import java.util.List;
 
 
 public class mainguiii extends JDialog implements ActionListener {
-    private JButton premierLeagueButton, vmButton, championsLeagueButton, avslutaButton, startGameButton;
+    private JButton premierLeagueButton, vmButton, championsLeagueButton, avslutaButton, startGameButton, viewResultsButton;
     private JLabel titleLabel;
     private JPanel mainPanel;
     private Controller controller;
@@ -82,12 +85,15 @@ public class mainguiii extends JDialog implements ActionListener {
         premierLeagueButton = new JButton("Premier League");
         avslutaButton = new JButton("Avsluta");
         startGameButton = new JButton("Start Game");
+        viewResultsButton = new JButton("View Results");
 
         addButton(vmButton);
         addButton(championsLeagueButton);
         addButton(premierLeagueButton);
+        addButton(viewResultsButton);
         addButton(avslutaButton);
 
+        viewResultsButton.addActionListener(e -> showResults());
         avslutaButton.addActionListener(e -> System.exit(0));
 
         setContentPane(mainPanel);
@@ -206,6 +212,19 @@ public class mainguiii extends JDialog implements ActionListener {
         repaint();
     }
 
+    private void showResults(){
+        StringBuilder results = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("results.txt"))){
+            String line;
+            while((line = reader.readLine()) != null) {
+                results.append(line).append("\n");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+            results.append("Could not load results");
+        }
+        JOptionPane.showMessageDialog(this, results.toString(), "Player from players", JOptionPane.INFORMATION_MESSAGE);
+    }
 
 
     private static QnA[] intitializeQuestions() {

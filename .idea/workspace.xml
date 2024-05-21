@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cf3f6618-4996-4e92-9210-4942dfce03f8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/landslag_questions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/landslag_questions.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mainguiii.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainguiii.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/production/Fotbollsquiz/landslag_questions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/production/Fotbollsquiz/landslag_questions.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "namn",
+    "git-widget-placeholder": "Resultat",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/soma azizi/OneDrive/Dokument/GitHub/Fotbollsquiz",
     "project.structure.last.edited": "Modules",
