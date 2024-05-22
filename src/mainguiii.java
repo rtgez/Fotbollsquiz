@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,23 +21,26 @@ public class mainguiii extends JDialog implements ActionListener {
     private JButton mediumButton;
     private JButton hardButton;
     private String currentDifficulty = "";
+    private static final String FILE_NAME = "usernames.txt";
+
 
     public static void main(String[] args) {
 
-
+       // list to store unique names
         List<String> uniqueNames = new ArrayList<>();
 
-        //list to store names
+        //read existing names from file
+        readNamesFromFile(uniqueNames);
 
         //loop to enter name
         while (true) {
             String name = JOptionPane.showInputDialog("Ange ditt användarnamn: ");
 
-            if (name == null) {
+           /* if (name == null) {
                 //break loop if user cancels
                 break;
             }
-
+*/
             if (name.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Namn behöver anges. Vänligen ange ditt användarnamn.");
 
@@ -46,7 +50,8 @@ public class mainguiii extends JDialog implements ActionListener {
 
             } else {
                 uniqueNames.add(name);
-                JOptionPane.showMessageDialog(null, "Welcome, " + name + "!");
+                writeNameToFile(name);
+                JOptionPane.showMessageDialog(null, "Varmt välkommen, " + name + "!");
                 break;
             }
         }
@@ -61,8 +66,28 @@ public class mainguiii extends JDialog implements ActionListener {
 
     }
 
+    //method to read names from file
+    private static void readNamesFromFile(List<String> uniqueNames) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                uniqueNames.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("No existing usernames found, new file will be created");
+        }
+    }
 
 
+    //method to write name to the file
+    private static void writeNameToFile(String name) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            bw.write(name);
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public mainguiii(Controller controller) {
         this.controller = controller;
         mainPanel = new JPanel(new GridBagLayout());
@@ -81,7 +106,7 @@ public class mainguiii extends JDialog implements ActionListener {
         championsLeagueButton = new JButton("Champions League");
         premierLeagueButton = new JButton("Premier League");
         avslutaButton = new JButton("Avsluta");
-        startGameButton = new JButton("Start Game");
+        startGameButton = new JButton("Starta quiz");
 
         addButton(vmButton);
         addButton(championsLeagueButton);
