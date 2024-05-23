@@ -159,4 +159,20 @@ public class Controller {
         }
     }
 */
+
+    private void endGame(){
+        view.stopTimer();
+        JOptionPane.showMessageDialog(view.getFrame(), "Quiz over! You answered " + player.getScore() + " correctly");
+        saveResults();
+        System.exit(0);
+    }
+
+    private void saveResults(){
+        try (PrintWriter writer = new PrintWriter(new FileWriter("results.txt", true))) {
+            writer.println("Player: " + player.getName() + ", Score: " + player.getScore() + "/" );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
