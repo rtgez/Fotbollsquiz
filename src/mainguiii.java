@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,12 +16,15 @@ public class mainguiii extends JDialog implements ActionListener {
     private JButton premierLeagueButton, vmButton, championsLeagueButton, avslutaButton, startGameButton;
     private JLabel titleLabel;
     private JPanel mainPanel;
-    private Controller controller;
+    private static Controller controller;
     private GridBagConstraints gbc;
     private String currentCategory = "";
     private JButton easyButton;
     private JButton mediumButton;
     private JButton hardButton;
+    private static String Player;
+    private static String player;
+    private static boolean multiplayer;
     private String currentDifficulty = "";
     private static final String FILE_NAME = "usernames.txt";
 
@@ -34,32 +39,89 @@ public class mainguiii extends JDialog implements ActionListener {
 
         //loop to enter name
         while (true) {
-            String name = JOptionPane.showInputDialog("Ange ditt användarnamn: ");
+            String options = JOptionPane.showInputDialog("Ange 1 för Singleplayer\nAnge 2 för Multiplayer");
+            int choice = Integer.parseInt(options);
 
-           /* if (name == null) {
-                //break loop if user cancels
-                break;
+            switch (choice) {
+                case 1:
+                    JOptionPane.showMessageDialog(null, "Du valde Singleplayer!");
+                    multiplayer = false;
+                    String name1 = JOptionPane.showInputDialog("Ange ditt användarnamn för Player1: ");
+                    Player = name1;
+                    if (name1 == null) {
+                        // break loop if user cancels
+                        break;
+                    }
+
+                    if (name1.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Namn behöver anges. Vänligen ange ditt användarnamn.");
+                    } else if (uniqueNames.contains(name1)) {
+                        JOptionPane.showMessageDialog(null, "Användarnamn upptaget, ange ett annat namn.");
+                    } else {
+                        uniqueNames.add(name1);
+                        writeNameToFile(name1);
+                        JOptionPane.showMessageDialog(null, "Varmt välkommen, " + name1 + "!");
+                        break;
+                    }
+                    break; // Lägg till break här för att avsluta switch-satsen korrekt
+
+                case 2:
+                    JOptionPane.showMessageDialog(null, "Du valde Multiplayer!");
+                    multiplayer = true;
+                    String name_1 = JOptionPane.showInputDialog("Ange ditt användarnamn för Player1: ");
+                    Player = name_1;
+                    if (name_1 == null) {
+                        // break loop if user cancels
+                        break;
+                    }
+
+                    if (name_1.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Namn behöver anges. Vänligen ange ditt användarnamn.");
+                    } else if (uniqueNames.contains(name_1)) {
+                        JOptionPane.showMessageDialog(null, "Användarnamn upptaget, ange ett annat namn.");
+                    } else {
+                        uniqueNames.add(name_1);
+                        writeNameToFile(name_1);
+                        JOptionPane.showMessageDialog(null, "Varmt välkommen, " + name_1 + "!");
+                    }
+
+                    String name2 = JOptionPane.showInputDialog("Ange ditt användarnamn för Player2: ");
+                    player = name2;
+                    if (name2 == null) {
+                        // break loop if user cancels
+                        break;
+                    }
+
+                    if (name2.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Namn behöver anges. Vänligen ange ditt användarnamn.");
+                    } else if (uniqueNames.contains(name2)) {
+                        JOptionPane.showMessageDialog(null, "Användarnamn upptaget, ange ett annat namn.");
+                    } else {
+                        uniqueNames.add(name2);
+                        writeNameToFile(name2);
+                        JOptionPane.showMessageDialog(null, "Varmt välkommen, " + name2 + "!");
+                        break;
+                    }
+                    break; // Lägg till break här för att avsluta switch-satsen korrekt
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Ogiltigt val, vänligen ange 1 eller 2.");
+                    break;
             }
-*/
-            if (name.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Namn behöver anges. Vänligen ange ditt användarnamn.");
-
-            } else if (uniqueNames.contains(name)) {
-                JOptionPane.showMessageDialog(null, "Användarnamn upptaget, ange ett annat namn.");
-
-
-            } else {
-                uniqueNames.add(name);
-                writeNameToFile(name);
-                JOptionPane.showMessageDialog(null, "Varmt välkommen, " + name + "!");
-                break;
-            }
+            break;
         }
 
+
         QnA[] questions = intitializeQuestions();
-        Player player = new Player(DEFAULT_MODALITY_TYPE.name());
+        Player player1 = new Player(Player);
+        System.out.println(player1.getName());
+        Player player2 = new Player(player);
+        System.out.println(player2.getName());
         View view = new View();
-        Controller controller = new Controller(player, questions, view);
+        Controller controller = new Controller(player1, player2, questions, view);
+        if (multiplayer){
+            controller.setMultiplayer();
+        }
         new mainguiii(controller).setVisible(true);
 
 

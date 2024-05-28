@@ -1,3 +1,5 @@
+package src;
+
 public class QnA {
     private String question;
     private String[] answers;

@@ -1,4 +1,4 @@
-/*
+package src;/*
     public void printNameRequest() {
         System.out.print("Your name: ");
     }

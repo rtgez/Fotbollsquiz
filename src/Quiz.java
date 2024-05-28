@@ -1,3 +1,5 @@
+package src;
+
 import java.util.Scanner;
 public class Quiz {
     String[] [] quiz = new String[][]{

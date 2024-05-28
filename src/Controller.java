@@ -1,17 +1,23 @@
+package src;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.*;
 
 public class Controller {
-    private Player player;
+    private Player player1;
+    private Player player2;
+    private int Playing = 1;
+    private boolean multiplayer = false;
     private QnA[] questions;
     private View view;
     private QnA currentQuestion;
     private Map<String, String> categoryToFilePath;
 
-    public Controller(Player player, QnA[] questions, View view) {
-        this.player = player;
+    public Controller(Player player1, Player player2, QnA[] questions, View view) {
+        this.player1 = player1;
+        this.player2 = player2;
         this.view = view;
         this.questions=questions;
         this.view.setController(this);
@@ -106,17 +112,57 @@ public class Controller {
 
     private void checkAnswer(QnA currentQuestion, ActionEvent e) {
         String selectedAnswer = ((JButton) e.getSource()).getText();
-        if (currentQuestion.check(selectedAnswer)) {
-            view.stopTimer();
-            player.scorePoint();
-            JOptionPane.showMessageDialog(view.getFrame(), "Correct! Score: " + player.getScore());
-            nextQuestion();
+
+        if (multiplayer){
+            if (Playing % 2 == 0) {
+                if (currentQuestion.check(selectedAnswer)) {
+                    view.stopTimer();
+                    player2.scorePoint();
+                    JOptionPane.showMessageDialog(view.getFrame(), "Correct! Score: " + player2.getScore());
+                    nextQuestion();
+                } else {
+                    JOptionPane.showMessageDialog(view.getFrame(), "Wrong answer. Score: " + player2.getScore());
+                }
+
+                Playing++;
+                System.out.println("Player 2 just answered!");
+            } else {
+                if (currentQuestion.check(selectedAnswer)) {
+                    view.stopTimer();
+                    player1.scorePoint();
+                    JOptionPane.showMessageDialog(view.getFrame(), "Correct! Score: " + player1.getScore());
+                    nextQuestion();
+                } else {
+                    JOptionPane.showMessageDialog(view.getFrame(), "Wrong answer. Score: " + player1.getScore());
+                }
+
+
+
+                Playing++;
+                System.out.println("Player 1 just answered");
+            }
+
+
         } else {
-            JOptionPane.showMessageDialog(view.getFrame(), "Wrong answer. Score: " + player.getScore());
+
+            if (currentQuestion.check(selectedAnswer)) {
+                view.stopTimer();
+                player1.scorePoint();
+                JOptionPane.showMessageDialog(view.getFrame(), "Correct! Score: " + player1.getScore());
+                nextQuestion();
+            } else {
+                JOptionPane.showMessageDialog(view.getFrame(), "Wrong answer. Score: " + player1.getScore());
+            }
+            System.out.println("Singleplayer just answered");
+
         }
+
         nextQuestion();
     }
 
+    public void setMultiplayer(){
+        multiplayer = true;
+    }
 
 /*
     public String getString() {
