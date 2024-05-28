@@ -124,7 +124,13 @@ public class Controller {
         }
         nextQuestion();
     }
+    public Player getPlayer() {
+        return player;
+    }
 
+    public int getPlayerScore() {
+        return player != null ? player.getScore() : 0;
+    }
 
 /*
     public String getString() {
