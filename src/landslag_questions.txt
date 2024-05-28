@@ -1,1 +1,41 @@
 What year was the first landslagh held?;1930,1950,1960,1970;1930
+Vilket land har vunnit flest VM-titlar?; brasilien,italien,frankrike,spanien;
+Vem är skyttekungen genom alla tider?; klose,péle,maradona,völler;
+Vilket av följande lag har aldrig vunnit VM?; italien, spanien, grekland, frankrike;
+Vem vann VM 2006?; italien,frankrike,spanien,brasilien;
+Vem var skyttekung i VM 2018?; kane,mbappé,makolli,rebic;
+Vad blev slutresultatet i VM-finalen 2018?; 4-2,4-1,3-1,3-2;
+Vilket land vann sitt första VM 1954?; västtyskland,brasilien,ungern,italien;
+Vilket land blev det första att vinna VM tre gånger?; brasilien,frankrike,italien,argentina;
+Vem blev utsedd till bästa fotbollsspelare i VM 2014?; messi,rodriguez,amin sarr,ricardinho;
+Vilket år hölls det första VM-mästerskapet?; 1930,1926,1934,1938;
+Vilken stad var värd för finalmatchen 2002?; yokohama,tokyo,kyoto,nagasaki;
+Vem var tränaren för vinnarlaget 2010?; vicente del bosque, jose luis de la fuentes, pep guardiola, carlo ancelotti;
+Hur många finaler har Brasilien förlorat?; 2,3,1,4;
+Vem har spelat flest VM-matcher?; messi, ronaldo,deco,kaka;
+Vem har gjort mål i flest mästerskap?; ronaldo,ronaldo nazario,péle,maradona;
+Vem har gjort det senaste målet i ordinarie tid?; taremi,mbappe,shaqiri,messi;
+Vem har gjort det snabbaste målet i en final?; hakan sukur,kaka,ronaldo nazario,messi;
+Vem är den äldsta målskytten i utslagnings rundan?; pepe,dani alves,klose,cafú;
+Vilket land har gjort flest mål i samma mästerskap?; ungern,brasilien,uruguay,frankrike;
+Vilken målvakt har gjort flest räddningar i en match?; tim howard,casillas,courtois,sommer;
+Efter hur lång tid utdelades det snabbaste röda kortet i en match?; 56 sek, 53 sek,59 sek,55 sek;
+Brasilien har fått flest röda kort i totalt genom alla mästerskap, hur många?; 11,10,12,9;
+Vilket land har spelat oavgjort mest av alla länder?; England,ungern,belgien,danmark;
+Spanien vann mästerskapet 2010, hur många mål släppte de in totalt?; 8,9,7,10;
+Vad är rekordet i publiksiffra någonsin i VM?; 173.850, 175.467, 180.430, 177.598;
+Vem av följande målvakter har inte räddat mer än två straffar i en strafflägning?; subasic, livakovic, ricardo, casillas;
+Vem har flest assister i VMs historia?; pelé,maradona, cafú, messi;
+I vilken upplaga av VM gjordes flest mål?; 2022, 2018, 1998, 2002;
+Vem är den äldsta kaptenen i mästerskapets historia?; dani alves, pepe, cafú, schweinsteiger;
+Hur många afrikanska lag har avancerat från kvartsfinal?; 1,2,3,4;
+Hur många afrikanska länder har arrangerat ett VM mästerskap?; 1,2,3,4;
+Vilket års mästerskap snittade högst publiksiffra?; usa 1994, sydkorea 2002, qatar 2022, sydafrika 2010;
+Vad skrevs slutresultatet till i finalen 1998 när frankrike mötte brasilien?; 2-0, 2-1, 1-0, 3-1;
+Vad skrevs slutresultatet till i den mest målrika matchen någonsin?; 10-1, 8-2, 7-3, 11-2;
+Vilken spelare har vunnit flest mästerskap?; pelé, maradona, cafú, zidane;
+Vilken spelare vunnit flest vm-matcher?; cafú, deco, muller, ballack;
+Vem är den yngsta målskytten i VMs historia?; Pelé, messi, maradona, genti;
+
+
+
