@@ -48,7 +48,7 @@ public class mainguiii extends JDialog implements ActionListener {
         setSize(400, 400);
         setLocationRelativeTo(null);
         setModal(true);
-        setVisible(true);
+        //setVisible(true);
     }
     private void addDifficultyButtons() {
         easyButton = new JButton("Easy");
@@ -135,13 +135,14 @@ public class mainguiii extends JDialog implements ActionListener {
 
         validate();
         repaint();
-        setVisible(true);
+       // setVisible(true);
     }
 
 
 
     private void StartGame() {
         System.out.println("Starting game for category: " + currentCategory + " with difficulty: " + currentDifficulty);
+        setVisible(false);
         controller.startGame(currentCategory, currentDifficulty);
     }
 

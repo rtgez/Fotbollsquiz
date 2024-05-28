@@ -78,9 +78,7 @@ public class View {
     public void displayQuestion(String question) {
         questionLabel.setText(question);
     }
-    public void initialize() {
-        frame.setVisible(true);
-    }
+
 
     public void displayAnswers(List<String> answers, ActionListener answerListener) {
         answersPanel.removeAll();
@@ -118,7 +116,7 @@ public class View {
         return frame;
     }
 
-    public void setFrame(JFrame frame) {
+  /* public void setFrame(JFrame frame) {
         this.frame = frame;
-    }
+    }*/
 }
