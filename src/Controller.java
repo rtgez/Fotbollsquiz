@@ -9,6 +9,7 @@ public class Controller {
     private View view;
     private QnA currentQuestion;
     private Map<String, String> categoryToFilePath;
+    private int timeSeconds;
 
     public Controller(Player player, QnA[] questions, View view) {
         this.player = player;
@@ -79,14 +80,19 @@ public class Controller {
         view.show();
         nextQuestion();
     }
-    private void applyDifficulty(String difficulty) {
+    private int applyDifficulty(String difficulty) {
         if ("Easy".equals(difficulty)) {
+            timeSeconds=20;
             view.startTimer(20);
         } else if ("Medium".equals(difficulty)) {
+            timeSeconds=10;
             view.startTimer(10);
         } else if ("Hard".equals(difficulty)) {
+            timeSeconds=5;
             view.startTimer(5);
         }
+
+        return timeSeconds;
     }
 
     public void nextQuestion() {
@@ -101,6 +107,8 @@ public class Controller {
         QnA question = questions[index];
         view.displayQuestion(question.getQuestion());
         view.displayAnswers(Arrays.asList(question.getAnswers()), e -> checkAnswer(question, e));
+
+        view.startTimer(timeSeconds);
     }
 
 
