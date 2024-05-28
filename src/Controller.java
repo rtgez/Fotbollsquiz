@@ -10,6 +10,7 @@ public class Controller {
     private QnA currentQuestion;
     private Map<String, String> categoryToFilePath;
     private int timeSeconds;
+    private int questionCounter=0;
 
     public Controller(Player player, QnA[] questions, View view) {
         this.player = player;
@@ -96,10 +97,10 @@ public class Controller {
     }
 
     public void nextQuestion() {
-        if (questions == null || questions.length == 0) {
+        if (questionCounter == 15) { // Kontrollera om 15 frågor har visats
             view.stopTimer();
-            JOptionPane.showMessageDialog(view.getFrame(), "No questions available.");
-            System.exit(1);
+            JOptionPane.showMessageDialog(view.getFrame(), "You have completed the quiz!");
+            view.avslutaSpel(); // Anropa avslutaSpel() för att hantera avslutningen av spelet
             return;
         }
 
@@ -109,6 +110,7 @@ public class Controller {
         view.displayAnswers(Arrays.asList(question.getAnswers()), e -> checkAnswer(question, e));
 
         view.startTimer(timeSeconds);
+        questionCounter++; // Öka räknaren för antal visade frågor
     }
 
 

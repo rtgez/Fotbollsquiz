@@ -1,1 +1,13 @@
-What year was the first championsleuge?;1930,1950,1960,1970;1950
+Which team has won the most Champions League titles?;Real Madrid,FC Barcelona,Liverpool,Milan;Real Madrid
+Which team held the record for most goals in a single Champions League season before it was surpassed by Bayern Munich in the 2019-2020 season?;Barcelona,Spain,Germany,Milan;Barcelona;
+Which player has scored the most goal overall in Champions League history?;Messi,Krim Benzema,Cristiano Ronaldo,Robert Lewandowski;Cristiano Ronaldo
+Which team is famously known for winning the Champions League final in 2005 after trailing 3-0 at halftime?;Milan,FC Barcelona,Real Madrid,Liverpool;Liverpool
+Who was the top scorer in the 2020-2021 UEFA Champions League season?;Robert Lewandowski,Lionel Messi,Erling Haaland,Kylian Mbappe;Erling Haaland
+Which club has won the UEFA Champions League three times in a row from 2016 to 2018?;Bayern Munich,Real Madrid,Barcelona,Manchester City;Real Madrid
+Which city has hosted the most UEFA Champions League finals?;Milan,Madrid,London,Rome;Milan
+Who is the youngest player to score a goal in a UEFA Champions League final?;Lionel Messi,Raul,Kylian Mbappe,Cristiano Ronaldo;Kylian Mbappe
+Which team holds the record for the most consecutive appearances in the UEFA Champions League group stage?;Manchester United,Bayern Munich,Barcelona,Real Madrid;Real Madrid
+Who scored the fastest hat-trick in UEFA Champions League history?;Lionel Messi,Cristiano Ronaldo,Luiz Adriano,Sergio Aguero;Luiz Adriano
+Which player has won the UEFA Champions League title with three different clubs?;Cristiano Ronaldo,Clarence Seedorf,Andres Iniesta,Gerard Pique;Clarence Seedorf
+Who holds the record for the most assists in a single UEFA Champions League season?;Lionel Messi,Kevin De Bruyne,Neymar,Dani Alves;Neymar
+Which team won the first-ever UEFA Champions League final held in the 1992-1993 season?;Barcelona,AC Milan,Juventus,Marseille;Barcelona

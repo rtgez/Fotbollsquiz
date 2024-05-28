@@ -51,24 +51,22 @@ public class View {
 
 
     public void avslutaSpel() {
-        frame.setVisible(false);
-        stopTimer();
-       // mainguiii.setVisible(true);
-
-       // System.out.println("hallå");
+        frame.setVisible(false); // Gömmer spelet
+        stopTimer(); // Stoppar timern
 
         if (controller != null) {
             Player player = controller.getPlayer();
             int score = controller.getPlayerScore();
             String name = JOptionPane.showInputDialog(null, "Enter your name for the high score:");
             if (name != null && !name.trim().isEmpty()) {
-                saveHighScore(name, score);
-                showHighScores();
-                mainguiii.setVisible(true);
+                saveHighScore(name, score); // Spara poängen
+                showHighScores(); // Visa highscore-listan
             }
         }
 
+        mainguiii.setVisible(true); // Visa huvudmenyn
     }
+
 
     public void setMainguiii(mainguiii mainguiii) {
         this.mainguiii = mainguiii;
