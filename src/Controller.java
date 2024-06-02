@@ -9,6 +9,9 @@ public class Controller {
     private View view;
     private QnA currentQuestion;
     private Map<String, String> categoryToFilePath;
+    private int questionCount = 0;
+    private final int MAX_QUESTIONS = 15;
+    private mainguiii mainGui;
 
     public Controller(Player player, QnA[] questions, View view) {
         this.player = player;
@@ -19,6 +22,11 @@ public class Controller {
         categoryToFilePath.put("Landslag", "src/landslag_questions.txt");
         categoryToFilePath.put("Champions League", "src/champions_leauge_questions.txt");
         categoryToFilePath.put("Allsvenskan", "src/questions.txt");
+        this.questionCount = 0;
+    }
+
+    public void setMainGui(mainguiii mainGui){
+        this.mainGui = mainGui;
     }
     private void loadQuestionsFromFile(String filePath) throws IOException {
         File file = new File(filePath);
@@ -97,10 +105,17 @@ public class Controller {
             return;
         }
 
+        if (questionCount >= MAX_QUESTIONS) {
+            endGame();
+            return;
+        }
+
         int index = new Random().nextInt(questions.length);
         QnA question = questions[index];
         view.displayQuestion(question.getQuestion());
         view.displayAnswers(Arrays.asList(question.getAnswers()), e -> checkAnswer(question, e));
+
+        questionCount++;
     }
 
 
@@ -164,7 +179,7 @@ public class Controller {
         view.stopTimer();
         JOptionPane.showMessageDialog(view.getFrame(), "Quiz over! You answered " + player.getScore() + " correctly");
         saveResults();
-        System.exit(0);
+        mainGui.resetToMainMenu();
     }
 
     private void saveResults(){

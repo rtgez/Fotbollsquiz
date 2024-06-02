@@ -58,9 +58,10 @@ public class mainguiii extends JDialog implements ActionListener {
         Player player = new Player(DEFAULT_MODALITY_TYPE.name());
         View view = new View();
         Controller controller = new Controller(player, questions, view);
-        new mainguiii(controller).setVisible(true);
+        mainguiii gui = new mainguiii(controller);
 
-
+        controller.setMainGui(gui);
+        gui.setVisible(true);
 
     }
 
@@ -198,7 +199,7 @@ public class mainguiii extends JDialog implements ActionListener {
         controller.startGame(currentCategory, currentDifficulty);
     }
 
-
+/*
     private void resetToMainMenu() {
         mainPanel.removeAll();
         titleLabel.setText("MENY");
@@ -211,6 +212,8 @@ public class mainguiii extends JDialog implements ActionListener {
         validate();
         repaint();
     }
+
+ */
 
     private void showResults(){
         StringBuilder results = new StringBuilder();
@@ -226,6 +229,19 @@ public class mainguiii extends JDialog implements ActionListener {
         JOptionPane.showMessageDialog(this, results.toString(), "Player from players", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public void resetToMainMenu(){
+        mainPanel.removeAll();
+        titleLabel.setText("MENY");
+        mainPanel.add(titleLabel, gbc);
+
+        addButton(vmButton);
+        addButton(championsLeagueButton);
+        addButton(premierLeagueButton);
+        addButton(viewResultsButton);
+        addButton(avslutaButton);
+        validate();
+        repaint();
+    }
 
     private static QnA[] intitializeQuestions() {
         QnA[] qnAS = new QnA[0];
