@@ -2,7 +2,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.*;
-
+/**
+ * The Controller class manages the flow of the game, including loading questions,
+ * handling player actions, and updating the view.
+ */
 public class Controller {
     private Player player;
     private QnA[] questions;
@@ -12,6 +15,14 @@ public class Controller {
     private int timeSeconds;
     private int questionCounter=0;
 
+    /**
+     * Constructs a Controller with the specified player, questions, and view.
+     *
+     * @param player    The player of the game.
+     * @param questions The array of questions.
+     * @param view      The view for displaying game information.
+     * @author lana
+     */
     public Controller(Player player, QnA[] questions, View view) {
         this.player = player;
         this.view = view;
@@ -22,6 +33,13 @@ public class Controller {
         categoryToFilePath.put("Champions League", "src/champions_leauge_questions.txt");
         categoryToFilePath.put("Allsvenskan", "src/questions.txt");
     }
+    /**
+     * Loads questions from a specified file path.
+     *
+     * @param filePath The file path from which to load questions.
+     * @throws IOException If an I/O error occurs.
+     *  @author lana
+     */
     private void loadQuestionsFromFile(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -61,7 +79,13 @@ public class Controller {
         }
         questions = questionList.toArray(new QnA[0]);
     }
-
+    /**
+     * Starts the game with the specified category and difficulty level.
+     *
+     * @param currentCategory The current category selected by the player.
+     * @param difficulty      The difficulty level selected by the player.
+     *  @author lana
+     */
 
 
     public void startGame(String currentCategory, String difficulty) {
@@ -81,6 +105,13 @@ public class Controller {
         view.show();
         nextQuestion();
     }
+    /**
+     * Applies the specified difficulty level by setting the timer accordingly.
+     *
+     * @param difficulty The difficulty level.
+     * @return The number of seconds for the timer based on the difficulty level.
+     *  @author lana, soma
+     */
     private int applyDifficulty(String difficulty) {
         if ("Easy".equals(difficulty)) {
             timeSeconds=20;
@@ -95,7 +126,10 @@ public class Controller {
 
         return timeSeconds;
     }
-
+    /**
+     * Displays the next question to the player.
+     *  @author lana
+     */
     public void nextQuestion() {
         if (questionCounter == 15) { // Kontrollera om 15 frågor har visats
             view.stopTimer();
@@ -112,7 +146,13 @@ public class Controller {
         view.startTimer(timeSeconds);
         questionCounter++; // Öka räknaren för antal visade frågor
     }
-
+    /**
+     * Checks the player's answer and updates the score if the answer is correct.
+     *
+     * @param currentQuestion The current question being answered.
+     * @param e               The action event triggered by the player's answer selection.
+    *  @author lana
+     */
 
     private void checkAnswer(QnA currentQuestion, ActionEvent e) {
         String selectedAnswer = ((JButton) e.getSource()).getText();
@@ -126,53 +166,23 @@ public class Controller {
         }
         nextQuestion();
     }
+    /**
+     * Gets the player.
+     *
+     * @return The player.
+     *  @author lana
+     */
     public Player getPlayer() {
         return player;
     }
-
+    /**
+     * Gets the player's score.
+     *
+     * @return The player's score.
+     *  @author lana
+     */
     public int getPlayerScore() {
         return player != null ? player.getScore() : 0;
     }
 
-/*
-    public String getString() {
-        return input.next();
-    }
-
-    public String getGuessOfPlayer() {
-        String guess = input.next();
-        if(!guess.equalsIgnoreCase("A") && !guess.equalsIgnoreCase("B")
-                && !guess.equalsIgnoreCase("C") && !guess.equalsIgnoreCase("D")) {
-            throw new IllegalArgumentException("Enter A, B, C or D");
-        }
-        return guess;
-    }
-
-    public void mainLoop() {
-        view.printNameRequest();
-        player.setName(getString());
-
-        while(true) {
-            String actualQuestion = question.getRandomQuestion();
-
-            // Check if actualQuestion is null to avoid NullPointerException
-            if (actualQuestion == null) {
-                System.out.println("Error: Question is null.");
-                break;
-            }
-
-            view.printQuestion(actualQuestion, question);
-            view.printInputRequest();
-            String input = getGuessOfPlayer();
-            if(question.check(input)) {
-                player.scorePoint();
-                view.printSuccessMessage();
-            } else {
-                view.printGameOverMessage();
-                view.printScoreOfPlayer(player);
-                break;
-            }
-        }
-    }
-*/
 }

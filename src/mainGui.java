@@ -6,8 +6,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-public class mainguiii extends JDialog implements ActionListener {
+/**
+ * The mainGui class represents the main GUI dialog for the quiz game.
+ * It allows the user to select a category and difficulty level, and start the game.
+ */
+public class mainGui extends JDialog implements ActionListener {
     private JButton allsvenskanButton, landslagButton, championsLeagueButton, avslutaButton, startGameButton;
     private JLabel titleLabel;
     private JPanel mainPanel;
@@ -21,8 +24,14 @@ public class mainguiii extends JDialog implements ActionListener {
     private static final String HIGH_SCORE_FILE = "highscores.txt";
     private JButton backButton;
     private JFrame frame;
-
-    public mainguiii(Controller controller) {
+    /**
+     * Constructs the main GUI with the specified controller.
+     *
+     * @param controller The controller for the game.
+     *  @author lana
+     *
+     */
+    public mainGui(Controller controller) {
         this.controller = controller;
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBackground(Color.decode("#171954"));
@@ -57,7 +66,10 @@ public class mainguiii extends JDialog implements ActionListener {
         setModal(true);
         // setVisible(true);
     }
-
+    /**
+     * Adds difficulty selection buttons to the GUI.
+     *  @author lana
+     */
     private void addDifficultyButtons() {
         easyButton = new JButton("Easy");
         mediumButton = new JButton("Medium");
@@ -71,13 +83,23 @@ public class mainguiii extends JDialog implements ActionListener {
         mediumButton.addActionListener(e -> currentDifficulty = "Medium");
         hardButton.addActionListener(e -> currentDifficulty = "Hard");
     }
-
+    /**
+     * Adds a button to the GUI and configures its properties.
+     *
+     * @param button The button to add.
+     *   @author lana
+     */
     private void addButton(JButton button) {
         configureButton(button);
         mainPanel.add(button, gbc);
         button.addActionListener(this);
     }
-
+    /**
+     * Configures the appearance and properties of a button.
+     *
+     * @param button The button to configure.
+     *   @author lana
+     */
     private void configureButton(JButton button) {
         button.setBackground(Color.decode("#93ceaf"));
         button.setForeground(Color.WHITE);
@@ -86,7 +108,12 @@ public class mainguiii extends JDialog implements ActionListener {
         button.setBorderPainted(false);
         button.setOpaque(true);
     }
-
+    /**
+     * Handles action events for the buttons.
+     *
+     * @param e The action event.
+     *           @author lana
+     */
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == avslutaButton) {
@@ -103,7 +130,12 @@ public class mainguiii extends JDialog implements ActionListener {
             }
             showQuiz(currentCategory);
     }}
-
+    /**
+     * Displays the quiz interface for the selected category.
+     *
+     * @param category The selected category.
+     *                  @author lana
+     */
     public void showQuiz(String category) {
         mainPanel.removeAll();
         mainPanel.setLayout(new GridBagLayout());
@@ -144,13 +176,19 @@ public class mainguiii extends JDialog implements ActionListener {
         repaint();
         // setVisible(true);
     }
-
+    /**
+     * Starts the game with the selected category and difficulty.
+     *  @author lana
+     */
     private void StartGame() {
         System.out.println("Starting game for category: " + currentCategory + " with difficulty: " + currentDifficulty);
         setVisible(false);
         controller.startGame(currentCategory, currentDifficulty);
     }
-
+    /**
+     * Resets the GUI to the main menu.
+     *  @author lana
+     */
     public void resetToMainMenu() {
         System.out.println("hej");
         mainPanel.removeAll();
@@ -165,13 +203,19 @@ public class mainguiii extends JDialog implements ActionListener {
         repaint();
     }
 
-    // High Score Methods
+    /**
+     * Saves a high score entry to the high score file.
+     *
+     * @param name  The name of the player.
+     * @param score The score of the player.
+     *   @author lana
+     */
     private void saveHighScore(String name, int score) {
         List<HighScoreEntry> highScores = readHighScores();
         highScores.add(new HighScoreEntry(name, score));
         Collections.sort(highScores);
 
-        // Keep only the top 10 scores
+
         if (highScores.size() > 10) {
             highScores = highScores.subList(0, 10);
         }
@@ -184,7 +228,12 @@ public class mainguiii extends JDialog implements ActionListener {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Reads the high scores from the high score file.
+     *
+     * @return A list of high score entries.
+     *  @author lana
+     */
     private List<HighScoreEntry> readHighScores() {
         List<HighScoreEntry> highScores = new ArrayList<>();
         File file = new File(HIGH_SCORE_FILE);
@@ -209,7 +258,10 @@ public class mainguiii extends JDialog implements ActionListener {
         Collections.sort(highScores);
         return highScores;
     }
-
+    /**
+     * Displays the high scores in a dialog.
+     *  @author lana
+     */
     private void showHighScores() {
         List<HighScoreEntry> highScores = readHighScores();
         StringBuilder message = new StringBuilder("High Scores:\n");
@@ -218,18 +270,27 @@ public class mainguiii extends JDialog implements ActionListener {
         }
         JOptionPane.showMessageDialog(this, message.toString());
     }
-
-    // Main method to start the application
+    /**
+     * The main method to start the application.
+     *
+     * @param args The command line arguments.
+     *   @author lana
+     */
     public static void main(String[] args) {
         QnA[] questions = intitializeQuestions();
         Player player = new Player("Player");
         View view = new View();
         Controller controller = new Controller(player, questions, view);
-        mainguiii gui = new mainguiii(controller);
-        view.setMainguiii(gui); // Pass the mainguiii instance to the View
+        mainGui gui = new mainGui(controller);
+        view.setMainguiii(gui); // Pass the mainGui instance to the View
         gui.setVisible(true);
     }
-
+    /**
+     * Initializes the questions for the game.
+     *
+     * @return An array of QnA objects.
+     *  @author lana
+     */
     private static QnA[] intitializeQuestions() {
         return new QnA[0];
     }

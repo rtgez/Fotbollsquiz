@@ -1,4 +1,3 @@
-import javax.print.attribute.standard.PresentationDirection;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -7,6 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.io.*;
 
+/**
+ * The View class represents the user interface for the quiz game.
+ * It includes methods for displaying questions, answers, and handling timers.
+ */
 public class View {
     private JFrame frame;
     private JButton avslutaSpel;
@@ -15,9 +18,12 @@ public class View {
     private final JLabel timerLabel;
     private Timer timer;
     private int timeLeft;
-    private mainguiii mainguiii;
+    private mainGui mainGui;
     private Controller controller;
-
+    /**
+     * Constructs the View and sets up the UI components.
+     *  @author lana
+     */
     public View() {
         frame = new JFrame("Quiz Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +55,10 @@ public class View {
         avslutaSpel.addActionListener(e -> avslutaSpel());
     }
 
-
+    /**
+     * Handles the action for ending the game.
+     *  @author lana
+     */
     public void avslutaSpel() {
         frame.setVisible(false); // Gömmer spelet
         stopTimer(); // Stoppar timern
@@ -64,14 +73,24 @@ public class View {
             }
         }
 
-        mainguiii.setVisible(true); // Visa huvudmenyn
+        mainGui.setVisible(true); // Visa huvudmenyn
     }
+    /**
+     * Sets the main menu interface for the view.
+     *
+     * @param mainGui The main menu interface.
+     *                   @author lana
+     */
 
-
-    public void setMainguiii(mainguiii mainguiii) {
-        this.mainguiii = mainguiii;
+    public void setMainguiii(mainGui mainGui) {
+        this.mainGui = mainGui;
     }
-
+    /**
+     * Configures the appearance of a button.
+     *
+     * @param button The button to configure.
+     *                @author lana
+     */
     private void configureButton(JButton button) {
         button.setBackground(Color.decode("#93ceaf"));
         button.setForeground(Color.WHITE);
@@ -80,12 +99,23 @@ public class View {
         button.setBorderPainted(false);
         button.setOpaque(true);
     }
-
+    /**
+     * Sets the controller for the view.
+     *
+     * @param controller The controller to set.
+     *                    @author robin, lorik
+     */
     public void setController(Controller controller) {
         this.controller = controller;
     }
 
-
+    /**
+     * Saves a high score entry to the high score file.
+     *
+     * @param name  The name of the player.
+     * @param score The score of the player.
+     *               @author lana
+     */
 
 
     private void saveHighScore(String name, int score) {
@@ -105,7 +135,12 @@ public class View {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Reads the high scores from the high score file.
+     *
+     * @return A list of high score entries.
+     *  @author lana
+     */
     private List<HighScoreEntry> readHighScores() {
         List<HighScoreEntry> highScores = new ArrayList<>();
         File file = new File("highscores.txt");
@@ -130,7 +165,10 @@ public class View {
         Collections.sort(highScores);
         return highScores;
     }
-
+    /**
+     * Displays the high scores in a dialog.
+     *  @author lana
+     */
     private void showHighScores() {
         List<HighScoreEntry> highScores = readHighScores();
         StringBuilder message = new StringBuilder("High Scores:\n");
@@ -139,7 +177,12 @@ public class View {
         }
         JOptionPane.showMessageDialog(frame, message.toString());
     }
-
+    /**
+     * Starts the timer for the current question.
+     *
+     * @param timeInSeconds The time in seconds for the timer.
+     *                       @author soma, lana
+     */
     public void startTimer(int timeInSeconds) {
         timeLeft = timeInSeconds;
         if (timer != null && timer.isRunning()) {
@@ -156,21 +199,38 @@ public class View {
         });
         timer.start();
     }
-
+    /**
+     * Updates the timer label to show the remaining time.
+     *  @author lana
+     */
     private void updateTimerLabel() {
         timerLabel.setText("Time left: " + timeLeft + "s");
     }
-
+    /**
+     * Stops the timer.
+     *  @author lana, soma
+     */
     public void stopTimer() {
         if (timer != null) {
             timer.stop();
         }
     }
-
+    /**
+     * Displays the given question.
+     *
+     * @param question The question to display.
+     *                  @author lana
+     */
     public void displayQuestion(String question) {
         questionLabel.setText(question);
     }
-
+    /**
+     * Displays the given answers and sets the action listener for each answer button.
+     *
+     * @param answers        A list of answers to display.
+     * @param answerListener The action listener for the answer buttons.
+     *     @author lana
+     */
     public void displayAnswers(List<String> answers, ActionListener answerListener) {
         answersPanel.removeAll();
         Color[] colors = new Color[]{
@@ -198,11 +258,19 @@ public class View {
         answersPanel.revalidate();
         answersPanel.repaint();
     }
-
+    /**
+     * Shows the frame (the game interface).
+     *  @author lana
+     */
     public void show() {
         frame.setVisible(true);
     }
-
+    /**
+     * Gets the frame (the main window).
+     *
+     * @return The frame.
+     *  @author lana
+     */
     public JFrame getFrame() {
         return frame;
     }
